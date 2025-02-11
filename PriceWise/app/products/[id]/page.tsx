@@ -11,12 +11,12 @@ import React from "react";
 
 
 
-type Props ={
-    params:{id:string}
+type PageProps ={
+    params:{id:string;}
 }
 
 
-const ProductDetails = async ({params:{id}}:Props) =>{
+const ProductDetails = async ({params:{id}}:PageProps) =>{
     const product = await getProductById(id);
 
     if(!product) redirect('/')
