@@ -1,6 +1,7 @@
 import Modal from "@/components/Modal";
 import PriceInfoCard from "@/components/PriceInfoCard";
 import ProductCard from "@/components/ProductCard";
+import ShareButton from "@/components/ShareButton";
 import { getProductById, getSimilarProducts } from "@/lib/actions";
 import { formatNumber } from "@/lib/utils";
 import { Product } from "@/types";
@@ -11,18 +12,23 @@ import React from "react";
 
 
 
-type PageProps ={
-    params:{id:string;}
+type Props ={
+    params: Promise<{
+        id: string;
+    }>
 }
 
 
-const ProductDetails = async ({params:{id}}:PageProps) =>{
+const ProductDetails = async ({ params }: Props) =>{
+    const { id } = await params;
+
+    
     const product = await getProductById(id);
 
     if(!product) redirect('/')
 
     const similarProducts = await getSimilarProducts(id);
-    const actualBuyers = product.reviewsCount;
+    
    
 
     return (
@@ -77,12 +83,16 @@ const ProductDetails = async ({params:{id}}:PageProps) =>{
                             </div>
 
                             <div className ="p-2 bg-white-200 rounded-10">
-                             <Image
-                                src="/assets/icons/share.svg"
-                                alt="share"
-                                width={20}
-                                height={20}
-                             />
+                              
+                                <ShareButton url={product.url} />  
+                                {/* <Image
+                                 src="/assets/icons/share.svg"
+                                 alt="share"
+                                 width={20}
+                                 height={20}
+                                /> */}
+                                
+                        
                             </div>
                         </div>                      
                     </div>
@@ -117,13 +127,13 @@ const ProductDetails = async ({params:{id}}:PageProps) =>{
                                             height={16}
                                         />
                                         <p className=" text-sm text-secondary font-semi-bold">
-                                            {product.reviewsCount} Reviews
+                                            {product.ratingsCount} Ratings
                                         </p>
                                     </div>
                                 </div>
                                 
                                 <p className="text-sm text-black opacity-50">
-                                    <span className="text-primary-green font-semibold">{actualBuyers}+</span> of buyers have recommended this.
+                                    <span className="text-primary-green font-semibold">100+</span> of buyers have recommended this.
                                 </p>
                             </div>
                         </div>

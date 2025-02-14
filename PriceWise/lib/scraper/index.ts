@@ -51,6 +51,12 @@ export async function scrapeAmazonProduct(url:string){
 
         const discountRate = $(".savingsPercentage").text().replace(/[-%]/g,"");
 
+        const reviewsCountText = $("#acrCustomerReviewText").text().trim(); 
+        const reviewsCount = parseInt(reviewsCountText.replace(/[^\d]/g, ''), 10);
+
+
+      
+
         const breadcrumb = $("#wayfinding-breadcrumbs_feature_div .a-breadcrumb")
         .text()
         .trim()
@@ -115,7 +121,7 @@ export async function scrapeAmazonProduct(url:string){
             priceHistory : [],
             discountRate : Number(discountRate),
             category,
-            reviewsCount:100,
+            ratingsCount:reviewsCount,
             stars:parsedStarRating ,
             isOutOfStock : outOfStock,
             description,
